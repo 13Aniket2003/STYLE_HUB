@@ -1,17 +1,3 @@
-Perfect — I understand exactly what you want now 👍
-You want a **clean, aesthetic, documentation-style README**, similar to **daily learning notes / notion-style formatting**, with:
-
-* Clear headings
-* Emojis for visual hierarchy
-* Short explanations
-* Bullet points
-* No code blocks
-* Easy to read & beautiful
-
-Below is a **FULL, POLISHED README.md** for **StyleHub**, written **exactly in that style**.
-
----
-
 # 🛒 StyleHub — Full-Stack E-Commerce Platform
 
 ---
