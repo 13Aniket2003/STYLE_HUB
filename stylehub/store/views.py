@@ -8,6 +8,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.http import JsonResponse
 from django.db.models import Q
+import stripe
+from django.conf import settings
+from django.urls import reverse
 
 from .models import Product, Category, Cart, CartItem, Order, OrderItem, UserProfile, Wishlist
 
@@ -222,11 +225,19 @@ def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart, created = Cart.objects.get_or_create(user=request.user)
     cart_item, item_created = CartItem.objects.get_or_create(cart=cart, product=product)
+    
     if not item_created:
         cart_item.quantity += 1
         cart_item.save()
+        
+    # Check if it's an AJAX request from your Javascript
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        return JsonResponse({'status': 'success', 'cart_count': cart.items.count()})
+        return JsonResponse({
+            'status': 'success', 
+            'cart_count': cart.items.count(),
+            'message': f'Added {product.name} to cart!'  # <-- THIS LINE FIXES THE "UNDEFINED" ISSUE
+        })
+        
     return redirect('cart')
 
 @login_required(login_url='auth')
@@ -258,44 +269,105 @@ def checkout(request):
     profile = UserProfile.objects.filter(user=request.user).first()
     return render(request, 'checkout.html', {'cart': cart, 'profile': profile})
 
+
+
+# Initialize Stripe with your secret key
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 @login_required(login_url='auth')
 def place_order(request):
     if request.method == 'POST':
         cart = get_object_or_404(Cart, user=request.user)
-        payment_success = random.choice([True, True, True, False]) 
         
-        if not payment_success:
-            messages.error(request, 'Payment failed. Please try again.')
-            return redirect('checkout')
+        request.session['checkout_data'] = {
+            'first_name': request.POST.get('first_name'),
+            'last_name': request.POST.get('last_name'),
+            'email': request.POST.get('email'),
+            'address': f"{request.POST.get('address')}, {request.POST.get('city')}, {request.POST.get('zip')}",
+            'city': request.POST.get('city'),
+        }
 
-        order = Order.objects.create(
-            user=request.user,
-            full_name=f"{request.POST.get('first_name')} {request.POST.get('last_name')}",
-            email=request.POST.get('email'),
-            address=f"{request.POST.get('address')}, {request.POST.get('city')}, {request.POST.get('zip')}",
-            city=request.POST.get('city'),
-            total_price=cart.get_total()
+        line_items = []
+        for item in cart.items.all():
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd', 
+                    'product_data': {
+                        'name': item.product.name,
+                    },
+                    # Converting Decimal to Float, then to Integer cents
+                    'unit_amount': int(float(item.product.price) * 100), 
+                },
+                'quantity': item.quantity,
+            })
+
+        # Ensure API key is set right before calling it (Fixes .env loading issues)
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        # We removed try/except so it WILL crash and show us the error!
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=request.build_absolute_uri(reverse('payment_success')),
+            cancel_url=request.build_absolute_uri(reverse('payment_cancel')),
         )
         
-        for item in cart.items.all():
-            OrderItem.objects.create(order=order, product=item.product, price=item.product.price, quantity=item.quantity)
-            if item.product.stock >= item.quantity:
-                item.product.stock -= item.quantity
-                item.product.save()
+        return redirect(checkout_session.url, code=303)
         
-        cart.items.all().delete()
+    return redirect('checkout')
+
+# --- NEW VIEW: Runs only if Stripe payment is successful ---
+@login_required(login_url='auth')
+def payment_success(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    checkout_data = request.session.get('checkout_data')
+
+    if not checkout_data or not cart.items.exists():
+        return redirect('home')
+
+    # Create the actual order now that payment is confirmed
+    order = Order.objects.create(
+        user=request.user,
+        full_name=f"{checkout_data['first_name']} {checkout_data['last_name']}",
+        email=checkout_data['email'],
+        address=checkout_data['address'],
+        city=checkout_data['city'],
+        total_price=cart.get_total()
+    )
+    
+    for item in cart.items.all():
+        OrderItem.objects.create(
+            order=order, 
+            product=item.product, 
+            price=item.product.price, 
+            quantity=item.quantity
+        )
+        if item.product.stock >= item.quantity:
+            item.product.stock -= item.quantity
+            item.product.save()
+    
+    # Clear cart and session data
+    cart.items.all().delete()
+    del request.session['checkout_data']
+    
+    try:
+        send_mail(
+            'Order Confirmed | Stylehub', 
+            f'Thank you for your order #{order.id}.\nTotal Amount: ${order.total_price}', 
+            settings.EMAIL_HOST_USER, 
+            [order.email], 
+            fail_silently=True
+        )
+    except: 
+        pass
         
-        try:
-            send_mail(
-                'Order Confirmed | Stylehub', 
-                f'Thank you for your order #{order.id}.\nTotal Amount: ${order.total_price}', 
-                settings.EMAIL_HOST_USER, 
-                [order.email], 
-                fail_silently=True
-            )
-        except: 
-            pass
-        return render(request, 'success.html', {'order': order})
+    return render(request, 'success.html', {'order': order})
+
+# --- NEW VIEW: Runs if user clicks "back" on the Stripe page ---
+@login_required(login_url='auth')
+def payment_cancel(request):
+    messages.error(request, "Payment was cancelled. Please try again.")
     return redirect('checkout')
 
 # ==========================================
