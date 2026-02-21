@@ -11,3 +11,5 @@ stripe
 dj-database-url
 gunicorn
 whitenoise
+cloudinary
+django-cloudinary-storage
