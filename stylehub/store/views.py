@@ -412,3 +412,11 @@ def about(request):
 
 def team_emails(request):
     return render(request, 'team_emails.html')
+
+from django.shortcuts import render
+
+def payment_success(request):
+    return render(request, "payment_success.html")
+
+def payment_cancel(request):
+    return render(request, "payment_cancel.html")
