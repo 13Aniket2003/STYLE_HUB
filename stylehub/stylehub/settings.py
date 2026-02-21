@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -25,9 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
  
-DEBUG = bool(os.environ.get("DEBUG", default=0))
+# DEBUG = bool(os.environ.get("DEBUG", default=0))
+
+DEBUG = os.getenv("DEBUG") == "True"
  
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","localhost 127.0.0.1 0.0.0.0").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","localhost,127.0.0.1 0.0.0.0").split(",")
 
 
 # Application definition
@@ -95,16 +98,25 @@ WSGI_APPLICATION = 'stylehub.wsgi.application'
 #     }
 # }
 
-load_dotenv()
+# DATABASES = {
+#     'default' : {
+#         'ENGINE' : 'django.db.backends.postgresql',
+#         'NAME' : os.getenv('DB_NAME'),
+#         'USER' : os.getenv('DB_USER'),
+#         'PASSWORD' : os.getenv('DB_PASSWORD'),
+#         'HOST' : os.getenv('DB_HOST'),
+#         'PORT' : os.getenv('DB_PORT'),
+#     }
+# }
 
 DATABASES = {
-    'default' : {
-        'ENGINE' : 'django.db.backends.postgresql',
-        'NAME' : os.getenv('DB_NAME'),
-        'USER' : os.getenv('DB_USER'),
-        'PASSWORD' : os.getenv('DB_PASSWORD'),
-        'HOST' : os.getenv('DB_HOST'),
-        'PORT' : os.getenv('DB_PORT'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('PGDATABASE'),
+        'USER': os.getenv('PGUSER'),
+        'PASSWORD': os.getenv('PGPASSWORD'),
+        'HOST': os.getenv('PGHOST'),
+        'PORT': os.getenv('PGPORT'),
     }
 }
 
