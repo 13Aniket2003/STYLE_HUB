@@ -30,8 +30,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.getenv("DEBUG") == "True"
  
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","localhost,127.0.0.1 0.0.0.0").split(",")
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","localhost,127.0.0.1 0.0.0.0").split(",")
 
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS",
+    "localhost,127.0.0.1,0.0.0.0,.up.railway.app"
+).split(",")
 
 # Application definition
 
@@ -68,9 +72,12 @@ MIDDLEWARE = [
 ]
 
 STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 ROOT_URLCONF = 'stylehub.urls'
 
@@ -173,15 +180,15 @@ USE_TZ = True
 
 
 # The URL to use when referring to static files
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
-# The absolute path to the directory where collectstatic will collect static files for deployment
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# # The absolute path to the directory where collectstatic will collect static files for deployment
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Additional locations the staticfiles app will traverse
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
+# # Additional locations the staticfiles app will traverse
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 
 MEDIA_URL = '/media/'
@@ -199,3 +206,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
