@@ -10,3 +10,4 @@ tzdata
 stripe
 dj-database-url
 gunicorn
+whitenoise
