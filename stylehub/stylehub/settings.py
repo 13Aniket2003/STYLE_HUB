@@ -37,6 +37,9 @@ ALLOWED_HOSTS = os.getenv(
     "localhost,127.0.0.1,0.0.0.0,.up.railway.app"
 ).split(",")
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://stylehub-production-2bae.up.railway.app"
+]
 # Application definition
 
 INSTALLED_APPS = [
