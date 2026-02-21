@@ -59,7 +59,7 @@
                 <div class="image-container">
                     <a href="{% url 'pro_detail' product.slug %}" target="_blank">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <img src="{{ product.image }}" alt="{{ product.name }}">
                         {% endif %}
                     </a>
                     <span class="new-tag">New</span>

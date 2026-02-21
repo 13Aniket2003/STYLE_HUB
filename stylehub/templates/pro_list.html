@@ -104,7 +104,7 @@
                     
                     <a href="{% url 'pro_detail' product.slug %}" class="product-image">
                         {% if product.image %}
-                            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <img src="{{ product.image }}" alt="{{ product.name }}">
                         {% endif %}
                     </a>
                     

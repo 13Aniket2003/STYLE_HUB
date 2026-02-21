@@ -45,9 +45,7 @@
                     <!-- Image is now clickable -->
                     <a href="{% url 'pro_detail' item.product.slug %}">
                         {% if item.product.image %}
-                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                        {% else %}
-                            <img src="{{ item.product.image_url }}" alt="{{ item.product.name }}">
+                            <img src="{{ item.product.image }}" alt="{{ item.product.name }}">
                         {% endif %}
                     </a>
                     
