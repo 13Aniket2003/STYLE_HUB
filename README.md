@@ -11,6 +11,28 @@ The goal was not only to build features, but to understand **how a real e-commer
 
 ---
 
+<img width="2879" height="1384" alt="552804972-d017469b-4843-428f-bb4d-2f241a9cb487" src="https://github.com/user-attachments/assets/ee7bca5e-a6e4-4527-b13c-ffdf4ad7600d" />
+
+<img width="2879" height="1534" alt="552805421-8aa784b8-d195-4d7e-91e3-e05a3266b8c2" src="https://github.com/user-attachments/assets/3b186c13-e3ff-43a0-846b-d6bc8fc83d4c" />
+
+<img width="2879" height="1526" alt="552805101-94e95b7e-529a-4183-bb51-6cceab79a3c2" src="https://github.com/user-attachments/assets/a4c7319c-12d7-409c-9b82-d8aa826cce46" />
+
+
+<img width="2879" height="1540" alt="552804741-38020464-0304-451c-8806-a719fca16493" src="https://github.com/user-attachments/assets/2c3ffd55-b25a-4130-a81c-fe3b63b0293f" />
+
+
+<img width="2879" height="1214" alt="552805867-6c733056-60b2-4ff3-a867-6e982658ce9f" src="https://github.com/user-attachments/assets/88d2ddf2-48bb-4562-8ed0-5e0ed21e25b4" />
+
+<img width="2870" height="1538" alt="552806033-1e170f7d-c8cf-40b3-845f-53051f83e752" src="https://github.com/user-attachments/assets/d61fd06c-befb-4e27-8408-2bbba51e287c" />
+
+<img width="2879" height="1535" alt="552805542-06af2804-9101-4ef6-bce4-abe7980a2078" src="https://github.com/user-attachments/assets/dc849f54-bb26-4488-b028-517b4c4d4ece" />
+
+<img width="2879" height="1533" alt="552806290-45aabe53-9b42-4227-8e4c-6b41d192ddc4" src="https://github.com/user-attachments/assets/abf91830-92bb-47ab-8a00-18721eb5c8e7" />
+
+<img width="2879" height="1508" alt="552805691-e0b55321-40bf-47a1-a5d3-d62cdf7e6e92" src="https://github.com/user-attachments/assets/cb2c001d-4e10-4871-a9c9-5adefb3369e1" />
+
+<img width="2871" height="1441" alt="552806164-95cb92d3-c005-46a8-957e-221fe2a3aae7" src="https://github.com/user-attachments/assets/78de6e01-cbdc-49cc-8dcb-15100084fbc3" />
+
 ## 🧠 What is StyleHub?
 
 StyleHub is a **complete shopping platform** where users can:
