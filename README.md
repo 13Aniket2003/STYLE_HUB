@@ -11,6 +11,11 @@ The goal was not only to build features, but to understand **how a real e-commer
 
 ---
 
+![WhatsApp Image 2026-02-22 at 10 19 45 PM](https://github.com/user-attachments/assets/efbfdc6e-7fcb-49b2-84df-4e6f9e5f8c17)
+
+![WhatsApp Image 2026-02-22 at 10 19 44 PM (2)](https://github.com/user-attachments/assets/56513e7a-1ed6-494b-a268-331f81b06a56)
+
+![WhatsApp Image 2026-02-22 at 10 19 42 PM](https://github.com/user-attachments/assets/b4c0508d-8c89-4916-9306-bf0d6d2caf7f)
 
 
 
