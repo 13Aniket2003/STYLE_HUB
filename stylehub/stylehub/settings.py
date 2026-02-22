@@ -30,7 +30,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.getenv("DEBUG") == "True"
  
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","localhost,127.0.0.1 0.0.0.0,.up.railway.app").split(",")
+#ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS","localhost,127.0.0.1 0.0.0.0,.up.railway.app").split(",")
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '0.0.0.0',
+    'stylehub-production-2bae.up.railway.app',
+]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://stylehub-production-2bae.up.railway.app"
@@ -145,12 +151,11 @@ WSGI_APPLICATION = 'stylehub.wsgi.application'
 # }
 
 import dj_database_url
+import os
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True,
+    'default': dj_database_url.config(
+        default='postgres://postgres:aniket@localhost:5432/stylehub'
     )
 }
 
@@ -227,6 +232,15 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
