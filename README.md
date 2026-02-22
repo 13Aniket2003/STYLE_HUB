@@ -10,9 +10,7 @@ The project focuses on **real-world system design**, **clean architecture**, and
 The goal was not only to build features, but to understand **how a real e-commerce system works internally**.
 
 ---
-<img width="1920" height="1080" alt="Screenshot (399)" src="https://github.com/user-attachments/assets/a18dd175-1ba0-45d0-ad10-c5f77f71b2d7" />
 
-<img width="1920" height="1080" alt="Screenshot (400)" src="https://github.com/user-attachments/assets/254683f7-1ba9-43ed-8038-02fbedd75e0e" />
 
 
 
